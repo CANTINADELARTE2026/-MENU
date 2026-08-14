@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#090909" />
+  <meta name="description" content="Menú de La Cantina del Arte" />
+  <title>La Cantina del Arte | Menú</title>
+  <style>
+    :root{
+      --bg:#090909;
+      --panel:#111;
+      --text:#f7f7f7;
+      --muted:#b7b7b7;
+      --red:#b91519;
+      --blue:#1595d3;
+      --shadow:0 14px 45px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(21,149,211,.16), transparent 30rem),
+        radial-gradient(circle at 92% 8%, rgba(185,21,25,.16), transparent 28rem),
+        var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap{width:min(100%,920px);margin:0 auto;padding:28px 14px 46px}
+    header{text-align:center;padding:18px 10px 24px}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.04);
+      border-radius:999px;padding:7px 12px;
+      font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#ddd;
+    }
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 16px rgba(21,149,211,.8)}
+    h1{margin:16px 0 5px;font-size:clamp(2rem,7vw,3.6rem);line-height:.98;letter-spacing:-.045em}
+    .accent{background:linear-gradient(90deg,#fff 5%,#d8d8d8 42%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .tagline{margin:9px auto 0;color:var(--muted);font-size:.98rem}
+    .rule{width:92px;height:3px;margin:18px auto 0;border-radius:4px;background:linear-gradient(90deg,var(--red),var(--blue))}
+    nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:0 0 20px}
+    nav a{
+      color:#fff;text-decoration:none;padding:10px 14px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.055);
+      font-size:.9rem;font-weight:650;backdrop-filter:blur(8px)
+    }
+    nav a:active{transform:scale(.98)}
+    .menu-page{
+      margin:0 auto 22px;
+      background:var(--panel);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+    .menu-page img{display:block;width:100%;height:auto;background:#fff;cursor:zoom-in}
+    .hint{text-align:center;color:#8f8f8f;font-size:.82rem;margin:-4px 0 25px}
+    footer{text-align:center;color:#777;font-size:.8rem;padding:8px 10px 0}
+    .viewer{
+      position:fixed;inset:0;display:none;z-index:30;background:rgba(0,0,0,.94);
+      overflow:auto;padding:54px 8px 22px;
+    }
+    .viewer.open{display:block}
+    .viewer img{display:block;width:min(1300px,100%);height:auto;margin:0 auto;background:#fff}
+    .close{
+      position:fixed;right:12px;top:12px;z-index:35;border:1px solid rgba(255,255,255,.25);
+      background:rgba(20,20,20,.78);color:#fff;width:40px;height:40px;border-radius:50%;font-size:1.35rem;
+      display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(8px)
+    }
+    @media (min-width:700px){
+      .wrap{padding-top:42px}
+      .menu-page{border-radius:24px}
+    }
+    @media print{
+      body{background:#fff}
+      header,nav,.hint,footer{display:none}
+      .wrap{width:100%;padding:0}
+      .menu-page{box-shadow:none;border:0;border-radius:0;margin:0;page-break-after:always}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="eyebrow"><span class="dot"></span> Menú digital</div>
+      <h1><span class="accent">La Cantina del Arte</span></h1>
+      <p class="tagline">El escenario es de todos</p>
+      <div class="rule"></div>
+    </header>
+
+    <nav aria-label="Secciones del menú">
+      <a href="#menu-1">Ver página 1</a>
+      <a href="#menu-2">Ver página 2</a>
+    </nav>
+
+    <section id="menu-1" class="menu-page" aria-label="Página 1 del menú">
+      <img src="menu-1.png" alt="Página 1 del menú de La Cantina del Arte" loading="eager" decoding="async" />
+    </section>
+
+    <section id="menu-2" class="menu-page" aria-label="Página 2 del menú">
+      <img src="menu-2.png" alt="Página 2 del menú de La Cantina del Arte" loading="lazy" decoding="async" />
+    </section>
+
+    <p class="hint">Tocá una página para ampliarla.</p>
+    <footer>La Cantina del Arte · Menú sujeto a disponibilidad</footer>
+  </main>
+
+  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Vista ampliada del menú">
+    <button class="close" id="closeViewer" aria-label="Cerrar">×</button>
+    <img id="viewerImage" src="" alt="Menú ampliado" />
+  </div>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    const viewerImage = document.getElementById('viewerImage');
+    const closeViewer = document.getElementById('closeViewer');
+    document.querySelectorAll('.menu-page img').forEach(img => {
+      img.addEventListener('click', () => {
+        viewerImage.src = img.src;
+        viewer.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    function closeModal(){
+      viewer.classList.remove('open');
+      document.body.style.overflow = '';
+      viewerImage.src = '';
+    }
+    closeViewer.addEventListener('click', closeModal);
+    viewer.addEventListener('click', e => { if (e.target === viewer) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>

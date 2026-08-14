@@ -1,0 +1,13 @@
+LA CANTINA DEL ARTE - MENU DIGITAL
+
+Contenido:
+- index.html: página web lista para publicar.
+- assets/menu-1.png y assets/menu-2.png: las dos páginas del menú.
+
+Para publicarla gratis:
+1. Subí la carpeta completa a un servicio de hosting estático.
+2. Una vez publicada, el servicio te dará una URL pública.
+3. Esa URL es la que debe contener el QR definitivo.
+
+IMPORTANTE:
+El QR debe apuntar a la URL pública final, no al enlace de edición de Canva.
